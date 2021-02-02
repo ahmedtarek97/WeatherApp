@@ -5,6 +5,9 @@ const geocode = require('./utils/geocode');
 const forecast = require('./utils/forecast')
 
 const app = express();
+const port = process.env.PORT || 3000;
+
+// paths for express config
 const publicDirectoryPath = path.join(__dirname ,'../public');
 const viewsPath = path.join(__dirname,'../templates/views'); // hbs searches for the views folder in the root the folder must be named views
 const partialPath = path.join(__dirname,'../templates/partials');
@@ -54,7 +57,7 @@ app.get('/weather',(req,res)=>{
             })
         }
         
-        forecast(latitude,longitude,(error,{cuerrentTempreature,feelsLike})=>{
+        forecast(latitude,longitude,(error,{cuerrentTempreature,feelsLike}={})=>{
             if(error){
                 return res.send({
                     error:error
@@ -102,6 +105,6 @@ app.get('*',(req,res)=>{
     });
 })
 
-app.listen(3000,()=>{
-    console.log('Server is running on port 3000');
+app.listen(port,()=>{
+    console.log('Server is running on port ' + port);
 });
